@@ -227,7 +227,7 @@ async function typeLines(el, lines, speed=50, linePause=450){
 }
 
 /* NEW: caption player — one phrase at a time */
-async function playPhrases(el, phrases, {typeSpeed=48, hold=1500, fade=350} = {}){
+async function playPhrases(el, phrases, {typeSpeed=100, hold=3000, fade=850} = {}){
   for(const line of phrases){
     el.classList.remove('fade-out');
     el.classList.add('fade-in');
@@ -288,7 +288,7 @@ async function runFlow(){
 
   // Main — caption style (one line at a time)
   mainEl.classList.remove('hidden');
-  await playPhrases(mainText, MAIN_PHRASES, {typeSpeed:67, hold:2200, fade:550});
+  await playPhrases(mainText, MAIN_PHRASES, {typeSpeed:100, hold:3000, fade:850});
 
   // Ending
   endingEl.classList.remove('hidden');
@@ -344,5 +344,6 @@ document.addEventListener('visibilitychange', ()=>{
 </script>
 </body>
 </html>
+
 
 
