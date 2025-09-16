@@ -226,6 +226,20 @@ async function typeLines(el, lines, speed=50, linePause=450){
   caret.remove();
 }
 
+/* NEW: caption player — one phrase at a time */
+async function playPhrases(el, phrases, {typeSpeed=48, hold=1500, fade=350} = {}){
+  for(const line of phrases){
+    el.classList.remove('fade-out');
+    el.classList.add('fade-in');
+    await typeTo(el, line, {speed:typeSpeed, caret:true});
+    await new Promise(r=>setTimeout(r, hold));
+    el.classList.remove('fade-in');
+    el.classList.add('fade-out');
+    await new Promise(r=>setTimeout(r, fade));
+    el.textContent = "";
+  }
+}
+
 /* ---------------- Flow ---------------- */
 const welcomeEl = document.getElementById('welcome');
 const welcomeText = document.getElementById('welcomeText');
@@ -240,19 +254,23 @@ const WELCOME_LINES = [
   "THIS LITTLE PAGE IS ONLY FOR YOU"
 ];
 
-// Main letter as ONE flowing string so it wraps naturally
-const MAIN_TEXT =
-"SEPTEMBER 16, 2025\n\n" +
-"GONGJUNIM,\n" +
-"I ADORE YOU, SWEETHEART.\n\n" +
-"I KNOW HOW MUCH YOU LIKE TO HEAR THAT — BUT I DON’T ONLY WRITE IT BECAUSE YOU LIKE IT — I WRITE IT BECAUSE IT MAKES ME WARM ALL OVER INSIDE TO WRITE IT TO YOU.\n\n" +
-"IT IS SUCH A TERRIBLY LONG TIME SINCE I LAST WROTE TO YOU.\n" +
-"I WANT TO TELL YOU I LOVE YOU. I WANT TO LOVE YOU. I ALWAYS WILL LOVE YOU.\n" +
-"I FIND IT HARD TO UNDERSTAND IN MY MIND WHAT IT MEANS TO LOVE YOU AFTER WE FIGHT — BUT I STILL WANT TO COMFORT AND TAKE CARE OF YOU — AND I WANT YOU TO LOVE ME AND CARE FOR ME. I WANT TO HAVE PROBLEMS TO DISCUSS WITH YOU — I WANT TO DO LITTLE PROJECTS WITH YOU. I NEVER THOUGHT UNTIL JUST NOW THAT WE CAN DO THAT. WHAT SHOULD WE DO. WE STARTED TO LEARN TO TALK WITHOUT FIGHT— OR LEARN ARABIC — OR DOING ONLINE SHOP. CAN’T I DO SOMETHING NOW? NO. I AM ALONE WITHOUT YOU AND YOU WERE THE “IDEAL-GIRL” AND GENERAL INSTIGATOR OF ALL OUR WILD ADVENTURES.\n\n" +
-"WHEN YOU WERE SICK YOU WORRIED BECAUSE YOU COULD NOT GIVE ME SOMETHING THAT YOU WANTED TO AND THOUGHT I NEEDED. YOU NEEDN’T HAVE WORRIED. JUST AS I TOLD YOU THEN THERE WAS NO REAL NEED BECAUSE I LOVED YOU IN SO MANY WAYS SO MUCH.\n\n" +
-"MY DARLING PRINCESS, I DO ADORE YOU.\n" +
-"I LOVE MY WIFE. I LOVE MY GONGJUNIM.\n" +
-"YOBO.";
+// Main letter as caption-style PHRASES (one at a time)
+const MAIN_PHRASES = [
+  "SEPTEMBER 16, 2025",
+  "GONGJUNIM, I ADORE YOU, SWEETHEART.",
+  "I KNOW HOW MUCH YOU LIKE TO HEAR THAT — BUT I DON’T ONLY WRITE IT BECAUSE YOU LIKE IT — I WRITE IT BECAUSE IT MAKES ME WARM ALL OVER INSIDE TO WRITE IT TO YOU.",
+  "IT IS SUCH A TERRIBLY LONG TIME SINCE I LAST WROTE TO YOU.",
+  "I WANT TO TELL YOU I LOVE YOU. I WANT TO LOVE YOU. I ALWAYS WILL LOVE YOU.",
+  "I FIND IT HARD TO UNDERSTAND IN MY MIND WHAT IT MEANS TO LOVE YOU AFTER WE FIGHT — BUT I STILL WANT TO COMFORT AND TAKE CARE OF YOU — AND I WANT YOU TO LOVE ME AND CARE FOR ME.",
+  "I WANT TO HAVE PROBLEMS TO DISCUSS WITH YOU — I WANT TO DO LITTLE PROJECTS WITH YOU. I NEVER THOUGHT UNTIL JUST NOW THAT WE CAN DO THAT.",
+  "WHAT SHOULD WE DO. WE STARTED TO LEARN TO TALK WITHOUT FIGHT — OR LEARN ARABIC — OR DOING ONLINE SHOP.",
+  "CAN’T I DO SOMETHING NOW? NO. I AM ALONE WITHOUT YOU AND YOU WERE THE “IDEAL-GIRL” AND GENERAL INSTIGATOR OF ALL OUR WILD ADVENTURES.",
+  "WHEN YOU WERE SICK YOU WORRIED BECAUSE YOU COULD NOT GIVE ME SOMETHING THAT YOU WANTED TO AND THOUGHT I NEEDED.",
+  "YOU NEEDN’T HAVE WORRIED. JUST AS I TOLD YOU THEN THERE WAS NO REAL NEED BECAUSE I LOVED YOU IN SO MANY WAYS SO MUCH.",
+  "MY DARLING PRINCESS, I DO ADORE YOU.",
+  "I LOVE MY SUNSHINE. I LOVE MY GONGJUNIM.",
+  "YOBO."
+];
 
 const ENDING_LINES = [
   "OUR NEXT CHAPTER STARTS UNDER THE STARS.",
@@ -268,11 +286,9 @@ async function runFlow(){
   await new Promise(r=>setTimeout(r, 600));
   welcomeEl.classList.add('hidden');
 
-  // Main (typed as one flowing paragraph string)
+  // Main — caption style (one line at a time)
   mainEl.classList.remove('hidden');
-  mainEl.classList.add('fade-in');
-  await typeTo(mainText, MAIN_TEXT, {speed:48, caret:true});
-  await new Promise(r=>setTimeout(r, 900));
+  await playPhrases(mainText, MAIN_PHRASES, {typeSpeed:48, hold:1500, fade:350});
 
   // Ending
   endingEl.classList.remove('hidden');
