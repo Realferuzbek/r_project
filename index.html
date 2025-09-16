@@ -209,8 +209,8 @@
 </main>
 
 <!-- Audio -->
-<audio id="bgm" src="die_with_a_smile.mp3" preload="auto" loop></audio>
-<div id="audioChip" class="audio-chip caps">tap to play</div>
+<audio id="bgm" src="die_with_a_smile.mp3" preload="auto" playsinline loop crossorigin="anonymous"></audio>
+<div id="audioChip" class="audio-chip caps">TAP TO PLAY</div>
 
 <script>
 /* ---------------- Hearts generator ---------------- */
@@ -234,37 +234,6 @@
 })();
 
 /* ---------------- Typewriter ---------------- */
-function typeTo(el, text, {speed=50, caret=true}={}){
-  return new Promise(resolve=>{
-    el.textContent = '';
-    let i=0;
-    let caretEl;
-    if(caret){
-      caretEl = document.createElement('span');
-      caretEl.className = 'caret';
-      el.appendChild(caretEl);
-    }
-    const tick = () => {
-      if(i < text.length){
-        const ch = text[i++];
-        // Insert line breaks for \n
-        if(ch === '\n'){
-          const br = document.createElement('br');
-          el.insertBefore(br, caretEl || null);
-        }else{
-          const node = document.createTextNode(ch);
-          el.insertBefore(node, caretEl || null);
-        }
-        setTimeout(tick, speed);
-      }else{
-        if(caret && caretEl) caretEl.remove();
-        resolve();
-      }
-    };
-    tick();
-  });
-}
-
 async function typeLines(el, lines, speed=50, linePause=450){
   el.innerHTML = '';
   const caret = document.createElement('span');
@@ -348,43 +317,51 @@ async function runFlow(){
 
 document.addEventListener('DOMContentLoaded', runFlow);
 
-/* ---------------- Audio autoplay (with graceful fallback) ---------------- */
+/* ---------------- Audio autoplay (desktop) + mobile gesture fallback ---------------- */
 const audio = document.getElementById('bgm');
 const chip  = document.getElementById('audioChip');
 audio.volume = 0.45;
 
+// Attempt autoplay ASAP
 async function tryAutoplay(){
   try{
-    // Many mobile browsers require user gesture; still try:
     await audio.play();
     chip.classList.remove('show'); // success
   }catch(e){
-    // Show tiny chip to request a tap
-    chip.classList.add('show');
+    chip.classList.add('show');    // likely blocked on mobile
   }
 }
 document.addEventListener('DOMContentLoaded', tryAutoplay);
-chip.addEventListener('click', async ()=>{
-  try{
-    await audio.play();
-    chip.classList.remove('show');
-  }catch(e){
-    // ignore
-  }
-});
 
-// Also try to resume on first touch anywhere
-window.addEventListener('pointerdown', async ()=>{
-  if(audio.paused){
-    try{
+// Start on ANY user gesture (first tap/click/keydown)
+const startOnGesture = async () => {
+  if (audio.paused) {
+    try {
       await audio.play();
       chip.classList.remove('show');
-    }catch(e){}
+      removeGestureListeners();
+    } catch(e) {}
   }
-},{ once:false });
+};
+function addGestureListeners(){
+  ['pointerdown','touchend','click','keydown'].forEach(ev=>{
+    window.addEventListener(ev, startOnGesture, { passive:true });
+  });
+}
+function removeGestureListeners(){
+  ['pointerdown','touchend','click','keydown'].forEach(ev=>{
+    window.removeEventListener(ev, startOnGesture);
+  });
+}
+addGestureListeners();
 
+// If tab becomes visible again (iOS restores), retry
+document.addEventListener('visibilitychange', ()=>{
+  if(!document.hidden && audio.paused) tryAutoplay();
+});
+
+// Chip manual start
+chip.addEventListener('click', startOnGesture);
 </script>
 </body>
 </html>
-
-
