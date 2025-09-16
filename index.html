@@ -227,7 +227,7 @@ async function typeLines(el, lines, speed=50, linePause=450){
 }
 
 /* NEW: caption player — one phrase at a time */
-async function playPhrases(el, phrases, {typeSpeed=48, hold=1500, fade=350} = {}){
+async function playPhrases(el, phrases, {typeSpeed=65, hold=2100, fade=450} = {}){
   for(const line of phrases){
     el.classList.remove('fade-out');
     el.classList.add('fade-in');
@@ -344,3 +344,4 @@ document.addEventListener('visibilitychange', ()=>{
 </script>
 </body>
 </html>
+
