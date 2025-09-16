@@ -33,58 +33,33 @@
     overflow:hidden;
   }
 
-  /* Uppercase + letter spacing for the whole site */
   .caps { text-transform: uppercase; letter-spacing: .08em; }
 
-  /* Hearts field */
-  .hearts{
-    position:fixed; inset:0; overflow:hidden; pointer-events:none;
-  }
+  /* Hearts */
+  .hearts{ position:fixed; inset:0; overflow:hidden; pointer-events:none; }
   .heart{
-    position:absolute;
-    bottom:-60px;
-    width:24px; height:24px;
-    transform-origin:center;
-    filter: drop-shadow(0 0 6px var(--heart-glow));
-    opacity:.9;
+    position:absolute; bottom:-60px; width:24px; height:24px;
+    transform-origin:center; filter: drop-shadow(0 0 6px var(--heart-glow)); opacity:.9;
   }
-  /* CSS heart shape */
   .heart::before, .heart::after{
-    content:"";
-    position:absolute;
-    width:12px; height:18px;
-    background: var(--heart);
-    border-radius:12px 12px 0 0;
-    top:2px; left:6px;
-    transform-origin:bottom center;
+    content:""; position:absolute; width:12px; height:18px; background: var(--heart);
+    border-radius:12px 12px 0 0; top:2px; left:6px; transform-origin:bottom center;
   }
-  .heart::after{
-    left:auto; right:6px;
-  }
-  .heart{
-    transform: rotate(45deg) scale(1) translateZ(0);
-  }
+  .heart::after{ left:auto; right:6px; }
+  .heart{ transform: rotate(45deg) scale(1) translateZ(0); }
   .heart::before{ transform: rotate(-45deg); }
   .heart::after { transform: rotate(45deg); }
-
-  @keyframes rise {
-    0%   { transform: translateY(0) scale(1, 1) rotate(45deg); opacity: 0; }
-    8%   { opacity: .95; }
-    70%  { transform: translateY(-45vh) scale(1, 1.08) rotate(45deg); }
-    100% { transform: translateY(-47vh) scale(1, 1.05) rotate(45deg); opacity:.0; }
+  @keyframes rise{
+    0%{transform: translateY(0) scale(1,1) rotate(45deg); opacity:0;}
+    8%{opacity:.95;}
+    70%{transform: translateY(-45vh) scale(1,1.08) rotate(45deg);}
+    100%{transform: translateY(-47vh) scale(1,1.05) rotate(45deg); opacity:0;}
   }
 
-  /* Center stage containers */
-  .stage{
-    position:relative;
-    height:100vh; width:100vw;
-    display:grid; place-items:center;
-    text-align:center;
-    padding:20px;
-  }
+  /* Layout */
+  .stage{ position:relative; height:100vh; width:100vw; display:grid; place-items:center; text-align:center; padding:20px; }
   .panel{
-    max-width: 860px;
-    width:min(92vw, 860px);
+    max-width: 860px; width:min(92vw, 860px);
     padding: clamp(18px, 4vw, 36px);
     border-radius: 24px;
     background: rgba(255,255,255,.08);
@@ -92,92 +67,61 @@
     box-shadow: 0 20px 80px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.25);
     backdrop-filter: blur(6px);
   }
-  .spotlight{
-    position:relative;
-  }
+  .spotlight{ position:relative; }
   .spotlight::before{
-    content:"";
-    position:absolute; inset:-8vh -6vw -8vh -6vw;
-    background: var(--spot);
-    z-index:-1;
+    content:""; position:absolute; inset:-8vh -6vw -8vh -6vw; background: var(--spot); z-index:-1;
   }
 
   h1,h2,p{ margin:0; }
-  .welcome-title{
-    font-weight:900;
-    font-size: clamp(26px, 6vw, 54px);
-    line-height:1.15;
-  }
-  .welcome-sub{
-    margin-top: .6rem;
-    font-weight:700;
-    font-size: clamp(14px, 2.7vw, 18px);
-    color: var(--muted);
-  }
+  .welcome-title{ font-weight:900; font-size: clamp(26px, 6vw, 54px); line-height:1.15; }
+  .welcome-sub{ margin-top:.6rem; font-weight:700; font-size: clamp(14px, 2.7vw, 18px); color: var(--muted); }
 
   .main-text, .ending-text{
     font-weight:700;
     font-size: clamp(16px, 3.4vw, 22px);
-    line-height: 1.55;
+    line-height:1.55;
     white-space: pre-wrap;
+    max-width:min(90vw, 820px);
+    margin:0 auto;
+    text-wrap: balance;
   }
-  .ending-text{
-    font-size: clamp(16px, 3.2vw, 20px);
-    font-weight:900;
-  }
+  .ending-text{ font-size: clamp(16px, 3.2vw, 20px); font-weight:900; }
 
   .hidden{ display:none; }
   .fade-in{ animation: fadeIn .7s ease forwards; }
   .fade-out{ animation: fadeOut .6s ease forwards; }
-
   @keyframes fadeIn{ from{opacity:0; transform: translateY(6px)} to{opacity:1; transform:none} }
   @keyframes fadeOut{ from{opacity:1} to{opacity:0} }
 
-  /* Typewriter caret */
-  .caret{
-    display:inline-block; width:.6ch;
-    border-right: 2px solid rgba(255,255,255,.8);
-    transform: translateY(.1em);
-    margin-left:.1ch;
-    animation: blink 1s step-end infinite;
-  }
-  @keyframes blink { 50%{ border-color: transparent; } }
+  .caret{ display:inline-block; width:.6ch; border-right:2px solid rgba(255,255,255,.8); transform: translateY(.1em); margin-left:.1ch; animation: blink 1s step-end infinite; }
+  @keyframes blink{ 50%{ border-color: transparent; } }
 
   /* Ending button */
   .cta{
     margin-top: clamp(12px, 2.8vw, 18px);
-    display:inline-block;
-    text-decoration:none;
-    color: #1b0b26;
-    font-weight:900;
-    letter-spacing:.08em;
+    display:inline-block; text-decoration:none; color:#1b0b26; font-weight:900; letter-spacing:.08em;
     background: linear-gradient(135deg, var(--btn-from), var(--btn-to));
-    padding: 14px 22px;
-    border-radius: 999px;
-    border: 1px solid rgba(255,255,255,.35);
-    box-shadow: 0 10px 30px rgba(160,122,255,.35), inset 0 1px 0 rgba(255,255,255,.6);
+    padding:14px 22px; border-radius:999px; border:1px solid rgba(255,255,255,.35);
+    box-shadow:0 10px 30px rgba(160,122,255,.35), inset 0 1px 0 rgba(255,255,255,.6);
     transform: translateZ(0);
   }
   .cta:hover{ filter: brightness(1.06); }
   .cta:active{ transform: scale(.98); }
 
-  /* Tiny audio chip (only shown if autoplay blocked) */
+  /* Audio chip (fallback hint) */
   .audio-chip{
-    position: fixed; right: 14px; bottom: 14px;
-    background: rgba(255,255,255,.2);
-    border:1px solid rgba(255,255,255,.4);
-    color:#1b0b26;
-    backdrop-filter: blur(6px);
-    padding: 8px 12px;
-    border-radius: 999px;
-    font-weight:900;
-    letter-spacing:.08em;
-    cursor:pointer;
-    box-shadow: 0 6px 22px rgba(0,0,0,.18);
-    display:none;
-    user-select:none;
+    position: fixed; right:14px; bottom:14px;
+    background: rgba(255,255,255,.2); border:1px solid rgba(255,255,255,.4);
+    color:#1b0b26; backdrop-filter: blur(6px);
+    padding:8px 12px; border-radius:999px; font-weight:900; letter-spacing:.08em;
+    cursor:pointer; box-shadow:0 6px 22px rgba(0,0,0,.18); display:none; user-select:none;
   }
   .audio-chip.show{ display:block; }
+
+  /* Invisible first-tap catcher to start audio instantly on mobile */
+  #gestureLayer{
+    position:fixed; inset:0; background:transparent; cursor:pointer; z-index:9999;
+  }
 </style>
 </head>
 <body>
@@ -185,9 +129,11 @@
 <!-- Hearts layer -->
 <div class="hearts" id="hearts" aria-hidden="true"></div>
 
+<!-- Invisible gesture layer (removed after first tap or successful autoplay) -->
+<div id="gestureLayer" aria-hidden="true"></div>
+
 <!-- Stages -->
 <main class="stage">
-
   <!-- WELCOME (with spotlight) -->
   <section id="welcome" class="panel spotlight">
     <h1 id="welcomeText" class="caps welcome-title" aria-live="polite"></h1>
@@ -216,13 +162,12 @@
 /* ---------------- Hearts generator ---------------- */
 (function(){
   const field = document.getElementById('hearts');
-  const HEART_COUNT = 20; // ~20 as requested
+  const HEART_COUNT = 20;
   const rnd = (min,max)=> Math.random()*(max-min)+min;
-
   for(let i=0;i<HEART_COUNT;i++){
     const h = document.createElement('div');
     h.className = 'heart';
-    const size = rnd(18, 30); // gentle sizes
+    const size = rnd(18, 30);
     h.style.width = size + 'px';
     h.style.height = size + 'px';
     h.style.left = rnd(2, 98) + 'vw';
@@ -233,7 +178,35 @@
   }
 })();
 
-/* ---------------- Typewriter ---------------- */
+/* ---------------- Typewriter helpers ---------------- */
+function typeTo(el, text, {speed=50, caret=true}={}){
+  return new Promise(resolve=>{
+    el.textContent = '';
+    let i=0;
+    let caretEl;
+    if(caret){
+      caretEl = document.createElement('span');
+      caretEl.className = 'caret';
+      el.appendChild(caretEl);
+    }
+    const tick = () => {
+      if(i < text.length){
+        const ch = text[i++];
+        if(ch === '\n'){
+          const br = document.createElement('br');
+          el.insertBefore(br, caretEl || null);
+        }else{
+          el.insertBefore(document.createTextNode(ch), caretEl || null);
+        }
+        setTimeout(tick, speed);
+      }else{
+        if(caret && caretEl) caretEl.remove();
+        resolve();
+      }
+    };
+    tick();
+  });
+}
 async function typeLines(el, lines, speed=50, linePause=450){
   el.innerHTML = '';
   const caret = document.createElement('span');
@@ -242,9 +215,7 @@ async function typeLines(el, lines, speed=50, linePause=450){
   for(let idx=0; idx<lines.length; idx++){
     const line = lines[idx];
     for(let j=0; j<line.length; j++){
-      const ch = line[j];
-      const node = document.createTextNode(ch);
-      el.insertBefore(node, caret);
+      el.insertBefore(document.createTextNode(line[j]), caret);
       await new Promise(r=>setTimeout(r, speed));
     }
     if(idx !== lines.length-1){
@@ -269,24 +240,19 @@ const WELCOME_LINES = [
   "THIS LITTLE PAGE IS ONLY FOR YOU"
 ];
 
-const MAIN_LINES = [
-  "SEPTEMBER 16, 2025",
-  "",
-  "GONGJUNIM,",
-  "I ADORE YOU, SWEETHEART.",
-  "",
-  "I KNOW HOW MUCH YOU LIKE TO HEAR THAT — BUT I DON’T ONLY WRITE IT BECAUSE YOU LIKE IT — I WRITE IT BECAUSE IT MAKES ME WARM ALL OVER INSIDE TO WRITE IT TO YOU.",
-  "",
-  "IT IS SUCH A TERRIBLY LONG TIME SINCE I LAST WROTE TO YOU.",
-  "I WANT TO TELL YOU I LOVE YOU. I WANT TO LOVE YOU. I ALWAYS WILL LOVE YOU.",
-  "I FIND IT HARD TO UNDERSTAND IN MY MIND WHAT IT MEANS TO LOVE YOU AFTER WE FIGHT — BUT I STILL WANT TO COMFORT AND TAKE CARE OF YOU — AND I WANT YOU TO LOVE ME AND CARE FOR ME. I WANT TO HAVE PROBLEMS TO DISCUSS WITH YOU — I WANT TO DO LITTLE PROJECTS WITH YOU. I NEVER THOUGHT UNTIL JUST NOW THAT WE CAN DO THAT. WHAT SHOULD WE DO. WE STARTED TO LEARN TO TALK WITHOUT FIGHT— OR LEARN ARABIC — OR DOING ONLINE SHOP. CAN’T I DO SOMETHING NOW? NO. I AM ALONE WITHOUT YOU AND YOU WERE THE “IDEAL-GIRL” AND GENERAL INSTIGATOR OF ALL OUR WILD ADVENTURES.",
-  "",
-  "WHEN YOU WERE SICK YOU WORRIED BECAUSE YOU COULD NOT GIVE ME SOMETHING THAT YOU WANTED TO AND THOUGHT I NEEDED. YOU NEEDN’T HAVE WORRIED. JUST AS I TOLD YOU THEN THERE WAS NO REAL NEED BECAUSE I LOVED YOU IN SO MANY WAYS SO MUCH.",
-  "",
-  "MY DARLING PRINCESS, I DO ADORE YOU.",
-  "I LOVE MY WIFE. I LOVE MY GONGJUNIM.",
-  "YOBO."
-];
+// Main letter as ONE flowing string so it wraps naturally
+const MAIN_TEXT =
+"SEPTEMBER 16, 2025\n\n" +
+"GONGJUNIM,\n" +
+"I ADORE YOU, SWEETHEART.\n\n" +
+"I KNOW HOW MUCH YOU LIKE TO HEAR THAT — BUT I DON’T ONLY WRITE IT BECAUSE YOU LIKE IT — I WRITE IT BECAUSE IT MAKES ME WARM ALL OVER INSIDE TO WRITE IT TO YOU.\n\n" +
+"IT IS SUCH A TERRIBLY LONG TIME SINCE I LAST WROTE TO YOU.\n" +
+"I WANT TO TELL YOU I LOVE YOU. I WANT TO LOVE YOU. I ALWAYS WILL LOVE YOU.\n" +
+"I FIND IT HARD TO UNDERSTAND IN MY MIND WHAT IT MEANS TO LOVE YOU AFTER WE FIGHT — BUT I STILL WANT TO COMFORT AND TAKE CARE OF YOU — AND I WANT YOU TO LOVE ME AND CARE FOR ME. I WANT TO HAVE PROBLEMS TO DISCUSS WITH YOU — I WANT TO DO LITTLE PROJECTS WITH YOU. I NEVER THOUGHT UNTIL JUST NOW THAT WE CAN DO THAT. WHAT SHOULD WE DO. WE STARTED TO LEARN TO TALK WITHOUT FIGHT— OR LEARN ARABIC — OR DOING ONLINE SHOP. CAN’T I DO SOMETHING NOW? NO. I AM ALONE WITHOUT YOU AND YOU WERE THE “IDEAL-GIRL” AND GENERAL INSTIGATOR OF ALL OUR WILD ADVENTURES.\n\n" +
+"WHEN YOU WERE SICK YOU WORRIED BECAUSE YOU COULD NOT GIVE ME SOMETHING THAT YOU WANTED TO AND THOUGHT I NEEDED. YOU NEEDN’T HAVE WORRIED. JUST AS I TOLD YOU THEN THERE WAS NO REAL NEED BECAUSE I LOVED YOU IN SO MANY WAYS SO MUCH.\n\n" +
+"MY DARLING PRINCESS, I DO ADORE YOU.\n" +
+"I LOVE MY WIFE. I LOVE MY GONGJUNIM.\n" +
+"YOBO.";
 
 const ENDING_LINES = [
   "OUR NEXT CHAPTER STARTS UNDER THE STARS.",
@@ -302,10 +268,10 @@ async function runFlow(){
   await new Promise(r=>setTimeout(r, 600));
   welcomeEl.classList.add('hidden');
 
-  // Main
+  // Main (typed as one flowing paragraph string)
   mainEl.classList.remove('hidden');
   mainEl.classList.add('fade-in');
-  await typeLines(mainText, MAIN_LINES, 48, 380);
+  await typeTo(mainText, MAIN_TEXT, {speed:48, caret:true});
   await new Promise(r=>setTimeout(r, 900));
 
   // Ending
@@ -317,51 +283,48 @@ async function runFlow(){
 
 document.addEventListener('DOMContentLoaded', runFlow);
 
-/* ---------------- Audio autoplay (desktop) + mobile gesture fallback ---------------- */
+/* ---------------- Audio autoplay: desktop + first-tap anywhere on mobile ---------------- */
 const audio = document.getElementById('bgm');
 const chip  = document.getElementById('audioChip');
+const gestureLayer = document.getElementById('gestureLayer');
 audio.volume = 0.45;
 
-// Attempt autoplay ASAP
+// Try autoplay immediately (desktop often allows)
 async function tryAutoplay(){
   try{
     await audio.play();
-    chip.classList.remove('show'); // success
+    chip.classList.remove('show');
+    if(gestureLayer) gestureLayer.remove(); // no tap needed
   }catch(e){
-    chip.classList.add('show');    // likely blocked on mobile
+    chip.classList.add('show');             // hint only, not required
+    // Keep gestureLayer so *any* first tap starts audio
   }
 }
 document.addEventListener('DOMContentLoaded', tryAutoplay);
 
-// Start on ANY user gesture (first tap/click/keydown)
-const startOnGesture = async () => {
-  if (audio.paused) {
-    try {
+// First tap anywhere starts music & removes layer
+async function startOnFirstTap(){
+  if(audio.paused){
+    try{
       await audio.play();
       chip.classList.remove('show');
-      removeGestureListeners();
-    } catch(e) {}
+    }catch(e){}
   }
-};
-function addGestureListeners(){
-  ['pointerdown','touchend','click','keydown'].forEach(ev=>{
-    window.addEventListener(ev, startOnGesture, { passive:true });
+  if(gestureLayer){ gestureLayer.remove(); }
+}
+if(gestureLayer){
+  ['pointerdown','touchend','click'].forEach(ev=>{
+    gestureLayer.addEventListener(ev, startOnFirstTap, { once:true, passive:true });
   });
 }
-function removeGestureListeners(){
-  ['pointerdown','touchend','click','keydown'].forEach(ev=>{
-    window.removeEventListener(ev, startOnGesture);
-  });
-}
-addGestureListeners();
 
-// If tab becomes visible again (iOS restores), retry
+// Also allow the chip as a manual fallback
+chip.addEventListener('click', startOnFirstTap);
+
+// If tab becomes visible again, retry autoplay
 document.addEventListener('visibilitychange', ()=>{
   if(!document.hidden && audio.paused) tryAutoplay();
 });
-
-// Chip manual start
-chip.addEventListener('click', startOnGesture);
 </script>
 </body>
 </html>
